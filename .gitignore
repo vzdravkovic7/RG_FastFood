@@ -1,0 +1,29 @@
+# Visual Studio
+.vs/
+*.vcxproj.user
+*.suo
+*.user
+*.ipch
+*.pdb
+*.obj
+*.exe
+*.log
+*.ilk
+*.idb
+*.ncb
+*.opensdf
+*.sdf
+
+# Build folders
+Debug/
+Release/
+x64/Debug/
+x64/Release/
+
+# NuGet packages
+packages/
+*.nupkg
+
+# OS files
+Thumbs.db
+.DS_Store
