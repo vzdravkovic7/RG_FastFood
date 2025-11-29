@@ -6,7 +6,7 @@ layout(location = 1) in vec2 inTex;
 out vec2 chTex;
 
 uniform vec2 uPos;
-uniform float uScale;
+uniform vec2 uScale;
 
 void main()
 {

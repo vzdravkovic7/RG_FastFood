@@ -147,13 +147,16 @@
     <Image Include="res\cheese.png" />
     <Image Include="res\cursor_spatula.png" />
     <Image Include="res\ketchup_bottle.png" />
+    <Image Include="res\ketchup_spill.png" />
     <Image Include="res\lettuce.png" />
     <Image Include="res\mustard_bottle.png" />
+    <Image Include="res\mustard_spill.png" />
     <Image Include="res\onion_ring.png" />
     <Image Include="res\pattie.png" />
     <Image Include="res\pattie_raw.png" />
     <Image Include="res\pickles.png" />
     <Image Include="res\plate.png" />
+    <Image Include="res\prijatno.png" />
     <Image Include="res\stove.png" />
     <Image Include="res\table.png" />
     <Image Include="res\tomato.png" />

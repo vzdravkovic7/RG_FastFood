@@ -21,6 +21,8 @@ Gameplay::Gameplay(Renderer* renderer, GLFWwindow* window)
 
     m_assembling.LoadTextures();
 
+    m_texPrijatno = Texture::FromFile("res/prijatno.png");
+
     if (m_texCursor) Input::InstallCursor(window, "res/cursor_spatula.png");
 }
 
@@ -83,12 +85,16 @@ void Gameplay::Update(float dt)
 
         if (m_assembling.IsFinished()) {
             m_state = STATE_FINISHED;
+            std::cout << "Burger completed -> FINISHED" << std::endl;
         }
     }
 }
 
 void Gameplay::OnRender(GLuint shaderProgram, GLuint vao)
 {
+    GLint locAlpha = glGetUniformLocation(shaderProgram, "uAlpha");
+    if (locAlpha >= 0) glUniform1f(locAlpha, 1.0f);
+
     glBindVertexArray(vao);
 
     GLint locPos = glGetUniformLocation(shaderProgram, "uPos");
@@ -96,57 +102,105 @@ void Gameplay::OnRender(GLuint shaderProgram, GLuint vao)
     GLint locUseTex1 = glGetUniformLocation(shaderProgram, "useTex1");
     GLint locBlend = glGetUniformLocation(shaderProgram, "uBlend");
 
-    auto DrawTex = [&](GLuint texID, float x, float y, float scale, GLuint tex1ID = 0, float blend = 0.0f) {
+    auto DrawTexSimple = [&](GLuint texID, float x, float y, float scaleX, float scaleY = 0.0f) {
         if (texID == 0) return;
+        if (scaleY == 0.0f) scaleY = scaleX;
         glBindTexture(GL_TEXTURE_2D, texID);
-        if (locUseTex1 >= 0 && locBlend >= 0) {
+        if (locUseTex1 >= 0) glUniform1i(locUseTex1, 0);
+        glUniform2f(locPos, x, y);
+        glUniform2f(locScale, scaleX, scaleY);
+        glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        };
+
+    auto DrawTexBlend = [&](GLuint baseTex, float x, float y, float scale, GLuint tex1ID, float blend) {
+        if (baseTex == 0) return;
+        glBindTexture(GL_TEXTURE_2D, baseTex);
+        if (locUseTex1 >= 0) {
             if (tex1ID != 0) {
                 glUniform1i(locUseTex1, 1);
                 glActiveTexture(GL_TEXTURE1);
                 glBindTexture(GL_TEXTURE_2D, tex1ID);
                 glActiveTexture(GL_TEXTURE0);
-                glUniform1f(locBlend, blend);
+                if (locBlend >= 0) glUniform1f(locBlend, blend);
             }
             else {
                 glUniform1i(locUseTex1, 0);
             }
         }
         glUniform2f(locPos, x, y);
-        glUniform1f(locScale, scale);
+        glUniform2f(locScale, scale, scale);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
+        if (locUseTex1 >= 0) glUniform1i(locUseTex1, 0);
         };
 
     switch (m_state)
     {
     case STATE_START_MENU:
-        DrawTex(m_texButton, m_btnPosX, m_btnPosY, m_btnScale);
+        DrawTexSimple(m_texButton, m_btnPosX, m_btnPosY, m_btnScale);
         break;
 
     case STATE_COOKING:
     {
-        DrawTex(m_texStove, m_stoveCenterX, m_stoveCenterY, 1.5f);
+        DrawTexSimple(m_texStove, m_stoveCenterX, m_stoveCenterY, 1.5f);
 
         // Smooth blend
-        DrawTex(m_texPattieRaw, m_pattieX, m_pattieY, 0.5f, m_texPattieCooked, m_cookProgress);
+        DrawTexBlend(m_texPattieRaw, m_pattieX, m_pattieY, 0.5f, m_texPattieCooked, m_cookProgress);
 
-        // Cooking bar background
-        DrawTex(m_texGray, m_barX, m_barY, m_barScale);
+        // Cooking bar background (gray)
+        DrawTexSimple(m_texGray, m_barX, m_barY, m_barScale);
 
         // Filled part (green)
-        float fillScale = m_barScale * m_cookProgress;
-        float fillPosX = m_barX - (m_barScale - fillScale) * 0.5f;
-        DrawTex(m_texGreen, fillPosX, m_barY, fillScale);
+        float fillWidth = m_barScale * m_cookProgress;
+        float leftEdgeCenter = m_barX - m_barScale * 0.5f;
+        float greenCenterX = leftEdgeCenter + fillWidth * 0.5f;
+        DrawTexSimple(m_texGreen, greenCenterX, m_barY, fillWidth, m_barScale * 0.9f);
 
         break;
     }
 
     case STATE_ASSEMBLING:
-        DrawTex(m_texTable, 0.0f, -0.2f, 2.0f);
+        DrawTexSimple(m_texTable, 0.0f, -0.2f, 2.0f);
         m_assembling.Render(shaderProgram, vao);
         break;
 
     case STATE_FINISHED:
-        DrawTex(m_texSignature, 0.0f, 0.0f, 1.0f);
+        // Render final burger assembled on plate
+        m_assembling.Render(shaderProgram, vao);
+
+        // Render “Prijatno!” texture
+        RenderFinalMessage(shaderProgram, vao);
         break;
     }
+
+    // Always show signature in upper-right corner (semi-transparent)
+    float sigScaleX = 1.0f;
+    float sigScaleY = 1.0f;
+    float sigX = 0.75f;
+    float sigY = 0.75f;
+
+    if (locAlpha >= 0) glUniform1f(locAlpha, 0.4f);
+    DrawTexSimple(m_texSignature, sigX, sigY, sigScaleX, sigScaleY);
+    if (locAlpha >= 0) glUniform1f(locAlpha, 1.0f);
+}
+
+
+void Gameplay::RenderFinalMessage(GLuint shaderProgram, GLuint vao)
+{
+    if (m_texPrijatno == 0) return;
+
+    glBindVertexArray(vao);
+    glBindTexture(GL_TEXTURE_2D, m_texPrijatno);
+
+    GLint locPos = glGetUniformLocation(shaderProgram, "uPos");
+    GLint locScale = glGetUniformLocation(shaderProgram, "uScale");
+
+    float x = 0.0f;
+    float y = 0.65f;
+    float sx = 1.5f;
+    float sy = 1.5f;
+
+    glUniform2f(locPos, x, y);
+    glUniform2f(locScale, sx, sy);
+
+    glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }

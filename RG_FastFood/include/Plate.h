@@ -23,7 +23,7 @@ public:
         glBindVertexArray(vao);
         glBindTexture(GL_TEXTURE_2D, m_tex);
         glUniform2f(locPos, m_x, m_y);
-        glUniform1f(locScale, m_scale);
+        glUniform2f(locScale, m_scale, m_scale);
         glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
     }
 
