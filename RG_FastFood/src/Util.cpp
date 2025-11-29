@@ -1,12 +1,11 @@
-#include "Util.h"
+#include "../include/Util.h"
 
 #define _CRT_SECURE_NO_WARNINGS
 #include <fstream>
 #include <sstream>
 #include <iostream>
 
-#define STB_IMAGE_IMPLEMENTATION
-#include "stb_image.h"
+#include "../include/stb_image.h"
 
 // Autor: Nedeljko Tesanovic (modifikovano radi stabilnosti)
 
