@@ -19,6 +19,8 @@ Gameplay::Gameplay(Renderer* renderer, GLFWwindow* window)
     m_texGreen = Texture::FromFile("res/_solid_green.png");
     m_texGray = Texture::FromFile("res/_solid_gray.png");
 
+    m_assembling.LoadTextures();
+
     if (m_texCursor) Input::InstallCursor(window, "res/cursor_spatula.png");
 }
 
@@ -71,7 +73,16 @@ void Gameplay::Update(float dt)
 
         if (m_cookProgress >= 1.0f) {
             m_state = STATE_ASSEMBLING;
+            m_assembling.Start(m_texPattieCooked);
             std::cout << "Cooking finished -> ASSEMBLING\n";
+        }
+    }
+
+    if (m_state == STATE_ASSEMBLING) {
+        m_assembling.Update(dt);
+
+        if (m_assembling.IsFinished()) {
+            m_state = STATE_FINISHED;
         }
     }
 }
@@ -130,7 +141,8 @@ void Gameplay::OnRender(GLuint shaderProgram, GLuint vao)
     }
 
     case STATE_ASSEMBLING:
-        DrawTex(m_texTable, 0.0f, -0.2f, 1.5f);
+        DrawTex(m_texTable, 0.0f, -0.2f, 2.0f);
+        m_assembling.Render(shaderProgram, vao);
         break;
 
     case STATE_FINISHED:

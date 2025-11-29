@@ -1,6 +1,7 @@
 #pragma once
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
+#include "../include/AssemblingController.h"
 
 class Renderer;
 
@@ -16,6 +17,8 @@ private:
     Renderer* m_renderer = nullptr;
     GLFWwindow* m_window = nullptr;
     GameState m_state = STATE_START_MENU;
+
+    AssemblingController m_assembling;
 
     // resources
     GLuint m_texButton = 0;
