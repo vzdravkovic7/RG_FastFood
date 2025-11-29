@@ -130,8 +130,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\Application.h" />
+    <ClInclude Include="include\AssemblingController.h" />
     <ClInclude Include="include\Gameplay.h" />
+    <ClInclude Include="include\Ingredient.h" />
     <ClInclude Include="include\Input.h" />
+    <ClInclude Include="include\Plate.h" />
     <ClInclude Include="include\Renderer.h" />
     <ClInclude Include="include\Shader.h" />
     <ClInclude Include="include\stb_image.h" />
@@ -139,20 +142,33 @@
     <ClInclude Include="include\Util.h" />
   </ItemGroup>
   <ItemGroup>
+    <Image Include="res\bottom_bun.png" />
     <Image Include="res\button_order.png" />
+    <Image Include="res\cheese.png" />
     <Image Include="res\cursor_spatula.png" />
+    <Image Include="res\ketchup_bottle.png" />
+    <Image Include="res\lettuce.png" />
+    <Image Include="res\mustard_bottle.png" />
+    <Image Include="res\onion_ring.png" />
     <Image Include="res\pattie.png" />
     <Image Include="res\pattie_raw.png" />
+    <Image Include="res\pickles.png" />
+    <Image Include="res\plate.png" />
     <Image Include="res\stove.png" />
     <Image Include="res\table.png" />
+    <Image Include="res\tomato.png" />
+    <Image Include="res\top_bun.png" />
     <Image Include="res\_solid_gray.png" />
     <Image Include="res\_solid_green.png" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\AssemblingController.cpp" />
     <ClCompile Include="src\Gameplay.cpp" />
+    <ClCompile Include="src\Ingredient.cpp" />
     <ClCompile Include="src\Input.cpp" />
     <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Plate.cpp" />
     <ClCompile Include="src\Renderer.cpp" />
     <ClCompile Include="src\Shader.cpp" />
     <ClCompile Include="src\Texture.cpp" />

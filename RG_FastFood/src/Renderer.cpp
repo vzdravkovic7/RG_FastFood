@@ -59,6 +59,6 @@ void Renderer::Render(Gameplay* gameplay) {
 	glActiveTexture(GL_TEXTURE0);
 
 
-	// Delegate drawing choices to Gameplay (it will call glUniforms and draw the VAO)
+	// Delegate drawing choices to Gameplay
 	gameplay->OnRender(m_shaderProgram, m_vao);
 }

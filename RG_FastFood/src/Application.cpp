@@ -1,6 +1,7 @@
 #include "../include/Renderer.h"
 #include "../include/Application.h"
 #include "../include/Gameplay.h"
+#include "../include/Input.h"
 #include <iostream>
 #include <thread>
 
@@ -45,6 +46,7 @@ int Application::Run() {
 	if (!InitGLFW()) return -1;
 	if (!InitGLEW()) return -1;
 
+	Input::Init(m_window);
 
 	// Create subsystems
 	m_renderer = std::make_unique<Renderer>(m_width, m_height);

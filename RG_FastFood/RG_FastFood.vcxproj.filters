@@ -48,6 +48,15 @@
     <ClInclude Include="include\Util.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="include\Ingredient.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\AssemblingController.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Plate.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\button_order.png">
@@ -74,6 +83,36 @@
     <Image Include="res\_solid_gray.png">
       <Filter>Resource Files</Filter>
     </Image>
+    <Image Include="res\bottom_bun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\cheese.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\ketchup_bottle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\lettuce.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\mustard_bottle.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\onion_ring.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\pickles.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\tomato.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\top_bun.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\plate.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Application.cpp">
@@ -98,6 +137,15 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\Util.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Ingredient.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AssemblingController.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Plate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
