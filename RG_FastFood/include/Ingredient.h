@@ -29,6 +29,18 @@ public:
 
     float GetX() const { return m_x; }
     float GetY() const { return m_y; }
+    IngredientType GetType() const { return m_type; }
+    void Show() { m_visible = true; }
+    void Hide() { m_visible = false; }
+    bool IsVisible() const { return m_visible; }
+
+    float GetTipX() const {
+        return m_x;
+    }
+
+    float GetTipY() const {
+        return m_y - m_height * 0.35f;
+    }
 
 private:
     IngredientType m_type;
@@ -36,6 +48,8 @@ private:
 
     float m_x, m_y;
     float m_speed = 1.0f;
+    float m_height = 0.6f;
 
     bool m_placed = false;
+    bool m_visible = true;
 };

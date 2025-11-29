@@ -8,14 +8,26 @@ public:
     AssemblingController();
 
     void LoadTextures();
+    void SpawnSpill(GLuint texID, float x, float y, float scale);
     void Start(GLuint cookedPattieTexture);
 
     void Update(float dt);
     void Render(GLuint shaderProgram, GLuint vao);
 
+    bool TipOverPlate(float tipX, float tipY);
+    bool TipOverTable(float tipX, float tipY);
+
     bool IsFinished() const { return m_done; }
 
 private:
+    struct Spill {
+        GLuint tex;
+        float x;
+        float y;
+        float scale;
+    };
+    std::vector<Spill> m_spills;
+
     std::vector<Ingredient> m_list;
     int m_currentIndex = 0;
     bool m_done = false;
@@ -37,4 +49,7 @@ private:
     bool m_plateInitialized = false;
 
     bool IngredientOverPlate(float x, float y);
+
+    GLuint m_texKetchupSpill = 0;
+    GLuint m_texMustardSpill = 0;
 };

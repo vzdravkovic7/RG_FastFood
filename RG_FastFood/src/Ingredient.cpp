@@ -22,13 +22,22 @@ void Ingredient::Update(float dt) {
 }
 
 void Ingredient::Render(GLuint shaderProgram, GLuint vao) {
+    glBindVertexArray(vao);
     glBindTexture(GL_TEXTURE_2D, m_texture);
 
     GLint locPos = glGetUniformLocation(shaderProgram, "uPos");
     GLint locScale = glGetUniformLocation(shaderProgram, "uScale");
 
+    float sx = 0.6f;
+    float sy = 0.6f;
+
+    // If ingredient is bottle, render upside-down
+    if (m_type == ING_KETCHUP || m_type == ING_MUSTARD) {
+        sy = -sy;
+    }
+
     glUniform2f(locPos, m_x, m_y);
-    glUniform1f(locScale, 0.6f);
+    glUniform2f(locScale, sx, sy);
 
     glDrawArrays(GL_TRIANGLE_FAN, 0, 4);
 }

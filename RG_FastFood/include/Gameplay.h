@@ -13,6 +13,9 @@ public:
     void Update(float dt);
     void OnRender(GLuint shaderProgram, GLuint vao);
 
+    void RenderFinalMessage(GLuint shaderProgram, GLuint vao);
+    GLuint m_texPrijatno;
+
 private:
     Renderer* m_renderer = nullptr;
     GLFWwindow* m_window = nullptr;
